@@ -1,6 +1,5 @@
 # dotenv environment variables file
 .env
-config/.env
 
 ### Node ###
 # Logs
