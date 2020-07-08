@@ -20,11 +20,12 @@ exports.getTransactions = async (req, res, next) => {
 
 // Add transaction
 
-exports.addTransaction = async (req, res, next) => {
-  try {
+exports.addTransaction = async (req, res, next) => { 
+  try { 
     const { text, amount } = req.body;
-
+    console.log(req.body)
     const transaction = await Transaction.create(req.body);
+    console.log(transaction)
   
     return res.status(201).json({
       success: true,

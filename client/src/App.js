@@ -3,8 +3,8 @@ import './App.css';
 import {Header} from "./components/expensetracker/Header"
 import {Balance} from "./components/expensetracker/Balance"
 import {Incomeandexpenses} from "./components/expensetracker/Incomeandexpenses"
-import *  as Transactionlist from "./components/expensetracker/Transactionlist"
-import { Addtransaction } from './components/expensetracker/Addtransaction';
+import {Transactionlist} from "./components/expensetracker/Transactionlist"
+import {Addtransaction } from './components/expensetracker/Addtransaction';
 import {GlobalProvider} from "./components/expensetracker/context/ExpenseState"
 
 
