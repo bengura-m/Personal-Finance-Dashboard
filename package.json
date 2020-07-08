@@ -22,6 +22,7 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
+    "build": "cd client && npm run build",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

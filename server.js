@@ -16,4 +16,12 @@ const app = express();
 app.use('/api/v1/transactions', transactions);
 app.use(express.json());
 
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
+
+// if(process.env.NODE_ENV === 'development'){
+//     app.use(morgan('dev'));
+// }
+
 app.listen(PORT, console.log(`Server running on port ${PORT}`.bgBlack));
