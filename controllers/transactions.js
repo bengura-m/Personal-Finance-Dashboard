@@ -20,11 +20,12 @@ exports.getTransactions = async (req, res, next) => {
 
 // Add transaction
 
-exports.addTransaction = async (req, res, next) => { 
+exports.addTransaction = async (req, res) => { 
+  console.log(req.body)
   try { 
     const { text, amount } = req.body;
     console.log(req.body)
-    const transaction = await Transaction.create(req.body);
+    const transaction =  await Transaction.create(req.body);
     console.log(transaction)
   
     return res.status(201).json({
@@ -32,6 +33,7 @@ exports.addTransaction = async (req, res, next) => {
       data: transaction
     }); 
   } catch (err) {
+    console.log(err)
     if(err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(val => val.message);
 
@@ -42,7 +44,7 @@ exports.addTransaction = async (req, res, next) => {
     } else {
       return res.status(500).json({
         success: false,
-        error: 'Server Error'
+        error: err
       });
     }
   }

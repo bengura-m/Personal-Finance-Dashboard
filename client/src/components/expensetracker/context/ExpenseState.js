@@ -32,19 +32,42 @@ async function getTransactions(){
         })
     }
 }
-    function deleteTransaction(id){
+async function deleteTransaction(id){
+    try{
+        await axios.delete(`/api/v1/transactions/${id}`);
         dispatch({
             type: "DELETE_TRANSACTION",
             payload: id
-        })
+        });
+    } catch (err) {
+        dispatch ({
+            type: 'TRANSACTION_ERROR',
+            payload:err.response.data.err
+        });
+    }
+}
+
+async function addTransaction(transaction) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
 
-    function addTransaction(transaction){
-        dispatch ({
-            type: "ADD_TRANSACTION",
-            payload:transaction
-        })
+    try {
+      const res = await axios.post('/api/v1/transactions', transaction, config);
+
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        payload: res.data.data
+      });
+    } catch (err) {
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.response.data.error
+      });
     }
+  }
     return (<GlobalContext.Provider value = {{
         transactions:state.transactions,
         error: state.error,
