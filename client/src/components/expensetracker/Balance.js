@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {GlobalContext} from "./context/ExpenseState";
+import {GlobalContext} from "../utils/context/ExpenseState";
 import { numberWithCommas } from '../utils/format'
 
 export const Balance = () => {

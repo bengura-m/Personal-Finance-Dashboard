@@ -8,7 +8,7 @@ import Portfolio from './components/pages/portfolio'
 import Navbar from "./components/Nav";
 // import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
-import Nav from "./components/Nav";
+import GlobalStore from "./components/utils/context/GlobalStore";
 
 // export default function App() {
 //   return (
@@ -92,52 +92,58 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
+        
         <BrowserRouter>
-          <Navbar/>
-          <Switch>
-            <Route
-              exact
-              path={"/"}
-              render={props => (
-                <Landingpage
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  handleLogout={this.handleLogout}
-                  loggedInStatus={this.state.loggedInStatus}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={"/about"}
-              render={props => (
-                <About
-                  {...props}
-                  loggedInStatus={this.state.loggedInStatus}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={"/portfolio"}
-              render={props => (
-                <Portfolio
-                  {...props}
-                  loggedInStatus={this.state.loggedInStatus}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={"/expensetracker"}
-              render={props => (
-                <Expensetracker
-                  {...props}
-                  loggedInStatus={this.state.loggedInStatus}
-                />
-              )}
-            />
-          </Switch>
+          
+            <Switch>
+              <Wrapper>
+              <GlobalStore.GlobalProvider>
+              <Route
+                exact
+                path={"/"}
+                render={props => (
+                  <Landingpage
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    handleLogout={this.handleLogout}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              </GlobalStore.GlobalProvider>
+              <Route
+                exact
+                path={"/about"}
+                render={props => (
+                  <About
+                    {...props}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={"/portfolio"}
+                render={props => (
+                  <Portfolio
+                    {...props}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={"/expensetracker"}
+                render={props => (
+                  <Expensetracker
+                    {...props}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              </Wrapper>
+            </Switch>
+          
         </BrowserRouter>
       </div>
     );

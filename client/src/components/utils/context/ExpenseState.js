@@ -68,6 +68,7 @@ async function addTransaction(transaction) {
       });
     }
   }
+
     return (<GlobalContext.Provider value = {{
         transactions:state.transactions,
         error: state.error,

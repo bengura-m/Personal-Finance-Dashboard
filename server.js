@@ -20,7 +20,7 @@ console.log(require('dotenv').config())
 connectDB();
 const app = express();
 // Passport config
-require('./config/passport') (passport);
+require('./config/passport');
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,13 +35,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-// Define API routes here
-// app.use('/api/v1/transactions', transactions);
-// set up routes
-app.use('/', require("./routes/index"))
-app.use('/', htmlroutes);
-app.use('/auth', authroutes);
-app.use('/transactions', transactions);
+
 
 // require ('./routes/loginUser')(app);
 // require('./routes/registerUser')(app);
@@ -51,10 +45,14 @@ app.use('/transactions', transactions);
 // Sessions
 app.use(
   session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    secret: process.env.GOOGLE_CLIENT_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+       mongooseConnection: mongoose.connection,
+       url: process.env.MONGO_URI,
+       autoReconnect: true,
+     }),
   })
 )
 
@@ -63,6 +61,14 @@ app.use(
 // We need to use sessions to keep track of our user's login status
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Define API routes here
+// app.use('/api/v1/transactions', transactions);
+// set up routes
+app.use('/', require("./routes/index"))
+app.use('/', htmlroutes);
+app.use('/auth', authroutes);
+app.use('/transactions', transactions);
 
 //Handlebars
 app.engine('.hbs', exphbs({defaultLayout:'main', extname:'.hbs'}));

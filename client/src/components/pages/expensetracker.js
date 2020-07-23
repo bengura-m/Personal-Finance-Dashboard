@@ -9,7 +9,7 @@ import {Balance} from "../expensetracker/Balance"
 import {Incomeandexpenses} from "../expensetracker/Incomeandexpenses"
 import {Transactionlist} from "../expensetracker/Transactionlist"
 import {Addtransaction } from '../expensetracker/Addtransaction';
-import {GlobalProvider} from "../expensetracker/context/ExpenseState"
+import {GlobalProvider} from "../utils/context/ExpenseState"
 
 
 export default function expensetracker() {

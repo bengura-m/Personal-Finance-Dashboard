@@ -1,16 +1,20 @@
 import React from 'react'
-import Loginbutton from '../loginbutton'
-import Login from '../login'
+import Loginbutton from '../landingpage/loginbutton'
+import Login from '../landingpage/login'
 import Header from '../landingpage/header'
+import LoginForm from '../landingpage/LoginForm'
+import SignupForm from '../landingpage/SignupForm'
+import 'fontsource-roboto';
 
 export default function Landingpage (){
     return(
-        <div className= "landingpage">
-            <div class="divider"></div>
-            <div class="section">
+        <div className= "container">
+            <div className="divider"></div>
+            <div className="section">
                 <Header/>
-                <Login/>
+                {/* <LoginForm/> */}
                 <Loginbutton/> 
+                {/* <SignupForm/> */}
             </div>    
         </div>
     )
