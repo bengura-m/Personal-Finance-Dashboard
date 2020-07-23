@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-// const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const connectDB = async () => {
     try {
-        const connection = await mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/personalfinancedashboard",
-            { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
+        const connection = await mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/financedashboard",
+            { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false}
           );
 
-        console.log(`MongoDB Connected: ${connection.connection.host}`.cyan.underline.bold);
+        console.log(`MongoDB Connected: ${connection.connection.host}`);
     } catch(e) {
         console.error(`Error: ${e.message}`);
         process.exit(1);

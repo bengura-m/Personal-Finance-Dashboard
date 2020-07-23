@@ -1,33 +1,87 @@
 const path = require('path');
-const express = require('express'); 
-const dotenv = require('dotenv');
-const morgan = require ('morgan');
-const colors = require('colors');
-const transactions = require('./routes/transactions');
+const express = require('express');
+const connectDB = require('./config/db'); 
+const exphbs = require("express-handlebars")
 const mongoose = require('mongoose');
+const morgan = require('morgan')
+const dotenv = require('dotenv');
+const passport = require('passport');
+const transactions = require('./routes/transactions');
+const authroutes = require("./routes/auth")
+const htmlroutes = require('./routes/htmlroutes')
+const expressSession = require('express-session')
+const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 const PORT = process.env.PORT || 5000;
-const connectDB = require('./config/db');
 
+dotenv.config({path:'./.env'});
+console.log(require('dotenv').config())
 
 connectDB();
-dotenv.config({path:'./.env'});
-
-console.log(require('dotenv').config())
 const app = express();
+// Passport config
+require('./config/passport') (passport);
+// Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/api/v1/transactions', transactions);
-
+// Serve up static assets (usually on heroku)
 
 if (process.env.NODE_ENV === "development") {
-    app.use(morgan('dev'));
-    
-  }
-
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static("client/build"));
-
-    app.get('*',(req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
+  app.use(morgan('dev'));
+  
+}
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 }
 
-app.listen(PORT, console.log(`Server running on port ${PORT}`.bgBlack));
+
+// Define API routes here
+// app.use('/api/v1/transactions', transactions);
+// set up routes
+app.use('/', require("./routes/index"))
+app.use('/', htmlroutes);
+app.use('/auth', authroutes);
+app.use('/transactions', transactions);
+
+// require ('./routes/loginUser')(app);
+// require('./routes/registerUser')(app);
+// require('./routes/findUsers')(app);
+// require('./routes/deleteUser')(app);
+// require('./routes/updateUser')(app);
+// Sessions
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+)
+
+// Send every other request to the React app
+
+// We need to use sessions to keep track of our user's login status
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Handlebars
+app.engine('.hbs', exphbs({defaultLayout:'main', extname:'.hbs'}));
+app.set('view engine', '.hbs')
+
+// Set global var
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null
+  next()
+})
+
+// Define any API routes before this runs
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`🌎 ==> API server now on port ${PORT}!`);
+});
+
+
+

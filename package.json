@@ -1,59 +1,49 @@
 {
-  "name": "personal-finance-dashboard",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "body-parser": "^1.19.0",
-    "colors": "^1.4.0",
-    "concurrently": "^5.2.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "mongod": "^2.0.0",
-    "mongoose": "^5.9.21",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
-  },
-  "scripts": {
-    "start": "node server",
-    "server": "nodemon server",
-    "build": "cd client && npm run build",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "proxy": "http://localhost:5000",
-  "description": "",
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "Mern Demo",
   "main": "server.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mitchelle-B/Personal-Finance-Dashboard.git"
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Mitchelle-B/Personal-Finance-Dashboard/issues"
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.18.7"
   },
-  "homepage": "https://github.com/Mitchelle-B/Personal-Finance-Dashboard#readme"
+  "dependencies": {
+    "axios": "^0.19.2",
+    "colors": "^1.4.0",
+    "connect-mongo": "^3.2.0",
+    "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "google-auth-library": "^6.0.5",
+    "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "moment": "^2.27.0",
+    "mongod": "^2.0.0",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.25",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "passport-oauth2-refresh": "^2.0.0",
+    "react-google-login": "^5.1.21",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.1.1"
+  }
 }

@@ -1,25 +1,145 @@
-import React from 'react';
-import './App.css';
-import {Header} from "./components/expensetracker/Header"
-import {Balance} from "./components/expensetracker/Balance"
-import {Incomeandexpenses} from "./components/expensetracker/Incomeandexpenses"
-import {Transactionlist} from "./components/expensetracker/Transactionlist"
-import {Addtransaction } from './components/expensetracker/Addtransaction';
-import {GlobalProvider} from "./components/expensetracker/context/ExpenseState"
+import React, {Component} from "react";
+import { BrowserRouter, Router, Route, Switch, Redirect } from "react-router-dom";
+import Landingpage from "./components/pages/landingpage";
+import axios from 'axios';
+import About from "./components/pages/about";
+import Expensetracker from "./components/pages/expensetracker";
+import Portfolio from './components/pages/portfolio'
+import Navbar from "./components/Nav";
+// import Footer from "./components/Footer";
+import Wrapper from "./components/Wrapper";
+import Nav from "./components/Nav";
+
+// export default function App() {
+//   return (
+//     <Router>
+//       <div>
+//         <Navbar />
+//         <Switch>
+//         <Wrapper>
+//           <Route exact path="/">
+//             {loggedIn ? <Redirect to ="/about"/>: <Landingpage/> }
+//           </Route>
+//           <Route exact path="/about" component={About} />
+//           <Route exact path="/expensetracker" component={Expensetracker} />
+//           <Route exact path="/porfolio" component={Portfolio} />
+//         </Wrapper>
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
 
 
-function App() {
-  return (
-    <GlobalProvider>
-      <Header/>
-      <div className = "container">
-        <Balance/>
-        <Incomeandexpenses/>
-        <Transactionlist/>
-        <Addtransaction/>
+export default class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      loggedInStatus: "NOT_LOGGED_IN",
+      user: {}
+    };
+
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  checkLoginStatus() {
+    axios
+      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .then(response => {
+        if (
+          response.data.logged_in &&
+          this.state.loggedInStatus === "NOT_LOGGED_IN"
+        ) {
+          this.setState({
+            loggedInStatus: "LOGGED_IN",
+            user: response.data.user
+          });
+        } else if (
+          !response.data.logged_in &
+          (this.state.loggedInStatus === "LOGGED_IN")
+        ) {
+          this.setState({
+            loggedInStatus: "NOT_LOGGED_IN",
+            user: {}
+          });
+        }
+      })
+      .catch(error => {
+        console.log("check login error", error);
+      });
+  }
+
+  componentDidMount() {
+    this.checkLoginStatus();
+  }
+
+  handleLogout() {
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN",
+      user: {}
+    });
+  }
+
+  handleLogin(data) {
+    this.setState({
+      loggedInStatus: "LOGGED_IN",
+      user: data.user
+    });
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <BrowserRouter>
+          <Navbar/>
+          <Switch>
+            <Route
+              exact
+              path={"/"}
+              render={props => (
+                <Landingpage
+                  {...props}
+                  handleLogin={this.handleLogin}
+                  handleLogout={this.handleLogout}
+                  loggedInStatus={this.state.loggedInStatus}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={"/about"}
+              render={props => (
+                <About
+                  {...props}
+                  loggedInStatus={this.state.loggedInStatus}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={"/portfolio"}
+              render={props => (
+                <Portfolio
+                  {...props}
+                  loggedInStatus={this.state.loggedInStatus}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={"/expensetracker"}
+              render={props => (
+                <Expensetracker
+                  {...props}
+                  loggedInStatus={this.state.loggedInStatus}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
       </div>
-    </GlobalProvider>
-  );
+    );
+  }
 }
-
-export default App;
