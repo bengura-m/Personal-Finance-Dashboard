@@ -1,7 +1,7 @@
 const express = require('express');
-const passport = require('../config/passport');
+const passport = require('../../config/passport');
 const validator = require('validator');
-const User = require('../models/User');
+const User = require('../../models/User');
 
 const router = express.Router();
 

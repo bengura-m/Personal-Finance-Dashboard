@@ -4,7 +4,8 @@ import Landingpage from "./components/pages/landingpage";
 import axios from 'axios';
 import About from "./components/pages/about";
 import Expensetracker from "./components/pages/expensetracker";
-import Portfolio from './components/pages/portfolio'
+import SavedStocks from './components/pages/SavedStocks'
+import SearchStocks from "./components/pages/SearchStocks"
 import Navbar from "./components/Nav";
 // import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
@@ -94,7 +95,7 @@ export default class App extends Component {
       <div className="app">
         
         <BrowserRouter>
-          
+          <Navbar/>
             <Switch>
               <Wrapper>
               <GlobalStore.GlobalProvider>
@@ -121,7 +122,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 exact
                 path={"/portfolio"}
                 render={props => (
@@ -130,12 +131,32 @@ export default class App extends Component {
                     loggedInStatus={this.state.loggedInStatus}
                   />
                 )}
-              />
+              /> */}
               <Route
                 exact
                 path={"/expensetracker"}
                 render={props => (
                   <Expensetracker
+                    {...props}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={"/savedStocks"}
+                render={props => (
+                  <SavedStocks
+                    {...props}
+                    loggedInStatus={this.state.loggedInStatus}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={"/searchStocks"}
+                render={props => (
+                  <SearchStocks
                     {...props}
                     loggedInStatus={this.state.loggedInStatus}
                   />

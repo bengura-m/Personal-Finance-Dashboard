@@ -6,9 +6,11 @@ const mongoose = require('mongoose');
 const morgan = require('morgan')
 const dotenv = require('dotenv');
 const passport = require('passport');
-const transactions = require('./routes/transactions');
-const authroutes = require("./routes/auth")
-const htmlroutes = require('./routes/htmlroutes')
+// const routes = require('./routes');
+const transactions = require('./routes/api/transactions');
+const authroutes = require("./routes/api/auth")
+const htmlroutes = require('./routes/api/htmlroutes')
+const stockroutes = require('./routes/api/stockroutes')
 const expressSession = require('express-session')
 const session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
@@ -65,10 +67,11 @@ app.use(passport.session());
 // Define API routes here
 // app.use('/api/v1/transactions', transactions);
 // set up routes
-app.use('/', require("./routes/index"))
+// app.use('/', require("./routes/index"))
 app.use('/', htmlroutes);
 app.use('/auth', authroutes);
 app.use('/transactions', transactions);
+app.use('/SavedStocks', stockroutes)
 
 //Handlebars
 app.engine('.hbs', exphbs({defaultLayout:'main', extname:'.hbs'}));

@@ -7,11 +7,13 @@ import './css/skeleton.css'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import StepThree from './StepThree'
+import StepFour from './StepFour'
 
 const steps = [
   { component: <StepOne /> },
   { component: <StepTwo /> },
   { component: <StepThree /> },
+  { component: <StepFour /> },
 ]
 
 export default function MasterForm () {

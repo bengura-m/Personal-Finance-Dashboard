@@ -1,0 +1,19 @@
+.card{
+    border-radius: 10px;
+    background-color: lightgrey
+}
+
+.saved-list{
+    border-radius: 15px;
+    background-color: lightyellow
+}
+
+.deleteStock {
+    border-radius: 5px;
+    margin-left: 10px
+}
+
+.viewStock {
+    border-radius: 5px;
+    margin-left: 5px
+}

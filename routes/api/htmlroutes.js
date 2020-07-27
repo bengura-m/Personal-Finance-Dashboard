@@ -2,7 +2,7 @@ const path = require("path");
 const express = require('express');
 const app = express();
 const router = require("express").Router();
-const { ensureAuth, ensureGuest} = require('../middleware/auth') // this is not working
+const { ensureAuth, ensureGuest} = require('../../middleware/auth') // this is not working
 
 router.get("/", ensureGuest, function (res, req) {
   res.sendfile(path.join(__dirname, "../client/src/pages/landingpage"));
@@ -32,4 +32,11 @@ router.get("/portfolio", ensureAuth, function (req, res) {
   res.sendFile(path.join(__dirname, "../client/src/pages/portfolio"));
 });
 
+router.get("/savedStocks", ensureAuth, function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/src/pages/SavedStocks"));
+});
+
+router.get("/searchStocks", ensureAuth, function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/src/pages/SearchStocks"));
+});
 module.exports = router

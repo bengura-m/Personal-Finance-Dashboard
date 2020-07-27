@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const authRoutes = require("./auth");
 const htmlRoutes = require('./htmlroutes')
-const transactions = require('./transactions')
-const AuthenticatedMiddleware = require ('../middleware/AuthenticatedMiddleware')
+const stockRoutes = require('./stockroutes')
+const transactions = require('../transactions')
+const AuthenticatedMiddleware = require ('../../middleware/AuthenticatedMiddleware')
 
 // Post routes
 
@@ -10,6 +11,7 @@ router.use(AuthenticatedMiddleware)
 router.use('/', htmlRoutes);
 router.use("/auth", authRoutes);
 router.use('/transactions', transactions)
+router.use("/books", stockRoutes);
 
 module.exports = router;
 
