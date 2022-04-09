@@ -36,7 +36,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "materialize-css": "^1.0.0-rc.2",
     "method-override": "^3.0.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "mongod": "^2.0.0",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.25",
